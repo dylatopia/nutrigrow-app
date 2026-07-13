@@ -26,7 +26,12 @@ Contributed to UI/UX design and feature planning for the app prototype, translat
 
 ## Tech Stack
 
-Built as a front-end prototype using HTML, CSS, and JavaScript, hosted on Netlify. This is a UI/UX prototype demonstrating the intended user experience — it is not yet connected to a backend, real meal inventory, or a payment gateway.
+Built using AI-assisted development tools (prompt-based / "vibe coding") 
+for the initial structure, then customized manually — adjusting layout, 
+colors, data, and flow logic — to match the app's design and UX requirements. 
+Front-end only: HTML, CSS, JavaScript, hosted on Netlify. This is a UI/UX 
+and business-model prototype — it demonstrates the intended user flow and 
+interface but is not yet connected to a backend, database, or payment system.
 
 ## Status
 
