@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NutriGrow – Aplikasi Nutrisi Keluarga & Terintegrasi</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Google Fonts loaded in CSS -->
+</head>
+<body>
+
+<!-- ============================================================
+     PHONE FRAME WRAPPER
+     ============================================================ -->
+<div class="phone-frame">
+  <div class="screen">
+
+    <!-- ======================================================
+         PAGE 1: LOGIN / REGISTER
+         ====================================================== -->
+    <div class="page active" id="page-login">
+      <div class="login-page">
+
+        <!-- Logo Area -->
+        <div class="login-logo-area">
+          <!-- 🔧 EDIT: Ganti emoji 💙 dengan <img src="your-logo.png"> jika punya file logo -->
+          <div class="login-logo-icon">
+          <img src="images/logo_nutrigrow.png" style="width:70px;height:70px;object-fit:contain">
+          </div>
+          <div class="login-brand">NutriGrow</div>
+          <div class="login-tagline">Aplikasi Nutrisi Keluarga &amp; Terintegrasi</div>
+        </div>
+
+        <!-- Auth Card -->
+        <div class="login-card">
+          <!-- Tabs -->
+          <div style="display:flex;gap:0;background:var(--bg-page);border-radius:10px;padding:3px;margin-bottom:20px;">
+            <button class="auth-tab active" data-mode="login"
+              style="flex:1;padding:9px;border:none;border-radius:8px;font-family:var(--font-main);font-size:13px;font-weight:700;cursor:pointer;transition:var(--transition);background:white;color:var(--primary);box-shadow:0 2px 8px rgba(21,101,192,0.15)">
+              Masuk
+            </button>
+            <button class="auth-tab" data-mode="register"
+              style="flex:1;padding:9px;border:none;border-radius:8px;font-family:var(--font-main);font-size:13px;font-weight:700;cursor:pointer;transition:var(--transition);background:transparent;color:var(--text-muted)">
+              Daftar
+            </button>
+          </div>
+
+          <!-- ===== LOGIN SECTION ===== -->
+          <div id="login-section">
+            <div class="login-title">Selamat Datang! 👋</div>
+            <div class="login-subtitle">Masuk ke akun NutriGrow Anda</div>
+            <div class="form-group">
+              <label class="form-label">Nama Lengkap</label>
+              <!-- 🔧 EDIT: Ini input nama yang akan tampil di home "Halo, [Nama]" -->
+              <input class="form-input" id="login-name" type="text" placeholder="Contoh: Ibu Ida" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kategori</label>
+              <!-- 🔧 EDIT: Pilihan kategori menentukan menu yang direkomendasikan -->
+              <div class="select-wrapper">
+                <select class="form-select" id="login-category">
+                  <option value="">-- Pilih Kategori --</option>
+                  <option value="ibuhamil">🤱 Ibu Hamil</option>
+                  <option value="mpasi6-8">👶 Bayi MPASI 6-8 Bulan</option>
+                  <option value="mpasi9-11">🍼 Bayi MPASI 9-11 Bulan</option>
+                  <option value="batita">🧒 Batita (1-3 Tahun)</option>
+                  <option value="balita">🧒 Balita (3-5 Tahun)</option>
+                </select>
+                <div class="select-arrow">▼</div>
+              </div>
+            </div>
+            <button class="btn-primary" id="btn-login" onclick="navigateTo('home')"> Masuk ke NutriGrow →</button>
+          </div>
+
+          <!-- ===== REGISTER SECTION ===== -->
+          <div id="register-section" style="display:none">
+            <div class="login-title">Buat Akun Baru ✨</div>
+            <div class="login-subtitle">Bergabung bersama keluarga NutriGrow</div>
+            <div class="form-group">
+              <label class="form-label">Nama Lengkap</label>
+              <!-- 🔧 EDIT: Nama yang akan tampil di halaman Home (Halo, [Nama]!) -->
+              <input class="form-input" id="reg-name" type="text" placeholder="Nama lengkap Anda">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email (opsional)</label>
+              <input class="form-input" id="reg-email" type="email" placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kategori Nutrisi</label>
+              <div class="select-wrapper">
+                <select class="form-select" id="reg-category">
+                  <option value="">-- Pilih Kategori --</option>
+                  <option value="ibuhamil">🤱 Ibu Hamil</option>
+                  <option value="mpasi6-8">👶 Bayi MPASI 6-8 Bulan</option>
+                  <option value="mpasi9-11">🍼 Bayi MPASI 9-11 Bulan</option>
+                  <option value="batita">🧒 Batita (1-3 Tahun)</option>
+                  <option value="balita">🧒 Balita (3-5 Tahun)</option>
+                </select>
+                <div class="select-arrow">▼</div>
+              </div>
+            </div>
+            <button class="btn-primary" id="btn-register">Daftar Sekarang →</button>
+          </div>
+
+        </div><!-- /login-card -->
+      </div>
+    </div><!-- /page-login -->
+
+
+    <!-- ======================================================
+         PAGE 2: HOME / BERANDA
+         ====================================================== -->
+    <div class="page" id="page-home">
+
+      <!-- Header -->
+      <div class="app-header">
+        <div class="header-row">
+          <div>
+            <div class="header-greeting">Selamat datang di NutriGrow</div>
+            <!-- 🔧 EDIT: Nama otomatis dari login – diisi oleh app.js (renderHomePage) -->
+            <div class="header-name" id="home-greeting">Halo!</div>
+            <!-- 🔧 EDIT: Badge kategori otomatis dari pilihan kategori -->
+            <div class="header-category-badge" id="home-category-badge" style="display:none">👤</div>
+          </div>
+          <!-- 🔧 EDIT: Foto profil – klik untuk upload foto. Dikelola oleh triggerPhotoUpload() -->
+          <div class="avatar-btn" id="home-avatar-img" onclick="triggerPhotoUpload('home-photo-input')">
+            <span class="avatar-icon">👤</span>
+          </div>
+          <!-- Input tersembunyi untuk upload foto profil -->
+          <input type="file" id="home-photo-input" accept="image/*" class="photo-upload-input" style="display:none">
+        </div>
+
+        <!-- Cart Banner – muncul jika ada item -->
+        <div class="cart-banner" id="cart-banner" onclick="navigateTo('rantang')" style="display:none">
+          <span id="cart-banner-text" class="cart-banner-text">0 Item di rantang</span>
+          <span class="cart-banner-arrow">›</span>
+        </div>
+      </div>
+
+      <!-- Scrollable content -->
+      <div class="page-content">
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button class="quick-action-btn" onclick="navigateTo('menu')">
+            <div class="quick-action-icon">🍽️</div>
+            <span class="quick-action-label">Pesan Menu</span>
+          </button>
+          <button class="quick-action-btn" onclick="showToast('🗺️ Fitur Cari Warteg segera hadir!')">
+            <div class="quick-action-icon">📍</div>
+            <span class="quick-action-label">Cari Warteg</span>
+          </button>
+          <button class="quick-action-btn" onclick="showToast('👩‍⚕️ Konsultasi Gizi segera hadir!')">
+            <div class="quick-action-icon">💬</div>
+            <span class="quick-action-label">Konsultasi Gizi</span>
+          </button>
+        </div>
+
+        <!-- Growth Chart Section -->
+        <div class="section-header">
+          <span class="section-title">📈 Pratinjau Pertumbuhan</span>
+          <button class="see-all-btn" onclick="showToast('Grafik detail segera hadir!')">Detail</button>
+        </div>
+        <div class="chart-card">
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#1565C0"></div>
+              <span>Berat Badan</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#29B6F6"></div>
+              <span>Tinggi Badan</span>
+            </div>
+          </div>
+          <!-- 🔧 EDIT: Canvas chart digambar otomatis oleh drawGrowthChart() di app.js -->
+          <canvas id="growth-chart" style="width:100%;height:100px"></canvas>
+        </div>
+
+        <!-- Menu Untukmu -->
+        <div class="section-header">
+          <span class="section-title">🍱 Menu Untukmu</span>
+          <button class="see-all-btn" onclick="navigateTo('menu')">Lihat Semua</button>
+        </div>
+        <div class="menu-scroll" id="menu-for-you">
+          <!-- Dirender oleh renderMenuForYou() -->
+        </div>
+
+        <!-- Spacer -->
+        <div style="height:20px"></div>
+
+      </div><!-- /page-content -->
+
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav">
+        <button class="nav-item active" data-page="home" onclick="navigateTo('home')">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Beranda</span>
+        </button>
+        <button class="nav-item" data-page="menu" onclick="navigateTo('menu')">
+          <span class="nav-icon">🍽️</span>
+          <span class="nav-label">Menu</span>
+        </button>
+        <button class="nav-item" data-page="rantang" onclick="navigateTo('rantang')">
+          <span class="nav-icon">🍱</span>
+          <span class="nav-label">Rantang</span>
+          <span class="nav-badge" style="display:none">0</span>
+        </button>
+        <button class="nav-item" data-page="profile" onclick="navigateTo('profile')">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Profil</span>
+        </button>
+      </nav>
+    </div><!-- /page-home -->
+
+
+    <!-- ======================================================
+         PAGE 3: MENU ORDERING
+         ====================================================== -->
+    <div class="page" id="page-menu">
+
+      <!-- Header sticky -->
+      <div class="menu-page-header">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="menu-page-title">Menu Ordering</div>
+          <div style="font-size:20px;cursor:pointer" onclick="navigateTo('rantang')">🛒</div>
+        </div>
+
+        <!-- Search bar -->
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <!-- 🔧 EDIT: Search otomatis filter menu saat diketik -->
+          <input type="text" id="menu-search" placeholder="Cari menu...">
+        </div>
+
+        <!-- Filter tabs utama -->
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="semua" onclick="setMenuFilter('semua')">Semua</button>
+          <button class="filter-tab" data-filter="ibuhamil" onclick="setMenuFilter('ibuhamil')">Ibu Hamil</button>
+          <button class="filter-tab" data-filter="mpasi6-8" onclick="setMenuFilter('mpasi6-8')">MPASI 6-8 Bln</button>
+          <button class="filter-tab" data-filter="mpasi9-11" onclick="setMenuFilter('mpasi9-11')">MPASI 9-11 Bln</button>
+          <button class="filter-tab" data-filter="batita" onclick="setMenuFilter('batita')">Batita</button>
+          <button class="filter-tab" data-filter="balita" onclick="setMenuFilter('balita')">Balita</button>
+        </div>
+
+        <!-- Sub filter -->
+        <div class="sub-filter-tabs">
+          <button class="sub-filter-tab active" data-sub="semua" onclick="setMenuSub('semua')">Semua</button>
+          <button class="sub-filter-tab" data-sub="ibuhamil" onclick="setMenuSub('ibuhamil')">Ibu Hamil</button>
+          <button class="sub-filter-tab" data-sub="mpasi6-8" onclick="setMenuSub('mpasi6-8')">6-8 Bln</button>
+          <button class="sub-filter-tab" data-sub="mpasi9-11" onclick="setMenuSub('mpasi9-11')">9-11 Bln</button>
+          <button class="sub-filter-tab" data-sub="batita" onclick="setMenuSub('batita')">Batita</button>
+          <button class="sub-filter-tab" data-sub="balita" onclick="setMenuSub('balita')">Balita</button>
+        </div>
+      </div>
+
+      <!-- Menu list scrollable -->
+      <div class="page-content" style="padding-bottom:calc(var(--nav-height) + 60px)">
+        <!-- 🔧 EDIT: Menu data ada di menuData array di app.js. Tambah item baru di sana -->
+        <div class="menu-list" id="menu-list-container">
+          <!-- Dirender oleh renderMenuPage() -->
+        </div>
+      </div>
+
+      <!-- Floating checkout if cart has items -->
+      <div id="menu-checkout-float" style="display:none;position:absolute;bottom:calc(var(--nav-height)+12px);left:20px;right:20px;z-index:50">
+        <div class="checkout-float" onclick="navigateTo('rantang')">
+          <span class="checkout-count-menu">0 item</span>
+          <span>Lihat Rantang →</span>
+          <span class="checkout-badge-menu">Rp 0</span>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav">
+        <button class="nav-item" data-page="home" onclick="navigateTo('home')">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Beranda</span>
+        </button>
+        <button class="nav-item active" data-page="menu" onclick="navigateTo('menu')">
+          <span class="nav-icon">🍽️</span>
+          <span class="nav-label">Menu</span>
+        </button>
+        <button class="nav-item" data-page="rantang" onclick="navigateTo('rantang')">
+          <span class="nav-icon">🍱</span>
+          <span class="nav-label">Rantang</span>
+          <span class="nav-badge" style="display:none">0</span>
+        </button>
+        <button class="nav-item" data-page="profile" onclick="navigateTo('profile')">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Profil</span>
+        </button>
+      </nav>
+    </div><!-- /page-menu -->
+
+
+    <!-- ======================================================
+         PAGE 4: RANTANG SAYA
+         ====================================================== -->
+    <div class="page" id="page-rantang">
+
+      <!-- Header -->
+      <div class="rantang-header-visual">
+        <div class="rantang-title">Rantang Saya 🍱</div>
+        <div class="rantang-subtitle">Pesanan Anda dikemas dengan standar gizi NutriGrow</div>
+      </div>
+
+      <!-- Scrollable content -->
+      <div class="page-content" style="padding-bottom:calc(var(--nav-height) + 80px)">
+
+        <!-- Rantang Visual Grid -->
+        <div class="rantang-visual">
+          <div class="rantang-label">🍱 Rantang NutriGrow</div>
+          <!-- 🔧 EDIT: Grid rantang otomatis menampilkan 4 menu dari cart. Data dari state.cart -->
+          <div class="rantang-grid" id="rantang-grid">
+            <!-- Dirender oleh renderRantangPage() -->
+          </div>
+        </div>
+
+        <!-- Nutrisi Summary -->
+        <!-- 🔧 EDIT: Data kalori/protein dari total cart. Otomatis dari getTotalNutri() -->
+        <div class="nutri-summary" id="rantang-nutri-summary">
+          <!-- Dirender otomatis -->
+        </div>
+
+        <!-- Daftar Pesanan -->
+        <div class="section-header">
+          <span class="section-title">📋 Daftar Pesanan</span>
+        </div>
+        <div class="order-section">
+          <div id="rantang-order-list">
+            <!-- Dirender oleh renderRantangPage() -->
+          </div>
+          <!-- Total -->
+          <div class="total-row" style="border-top:2px solid var(--bg-light);margin-top:8px">
+            <span>Total Pembayaran</span>
+            <span class="total-amount" id="rantang-total">Rp 0</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Checkout floating button -->
+      <div class="checkout-float" id="rantang-checkout-float" style="display:none" onclick="navigateTo('checkout')">
+        <span class="checkout-count">0 item</span>
+        <span>Checkout Sekarang →</span>
+        <span class="checkout-badge">Rp 0</span>
+      </div>
+
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav">
+        <button class="nav-item" data-page="home" onclick="navigateTo('home')">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Beranda</span>
+        </button>
+        <button class="nav-item" data-page="menu" onclick="navigateTo('menu')">
+          <span class="nav-icon">🍽️</span>
+          <span class="nav-label">Menu</span>
+        </button>
+        <button class="nav-item active" data-page="rantang" onclick="navigateTo('rantang')">
+          <span class="nav-icon">🍱</span>
+          <span class="nav-label">Rantang</span>
+          <span class="nav-badge" style="display:none">0</span>
+        </button>
+        <button class="nav-item" data-page="profile" onclick="navigateTo('profile')">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Profil</span>
+        </button>
+      </nav>
+    </div><!-- /page-rantang -->
+
+
+    <!-- ======================================================
+         PAGE 5: CHECKOUT & PEMBAYARAN
+         ====================================================== -->
+    <div class="page" id="page-checkout">
+
+      <!-- Header -->
+      <div class="checkout-header">
+        <button class="back-btn" onclick="navigateTo('rantang')">←</button>
+        <div class="checkout-title">Checkout &amp; Pembayaran</div>
+      </div>
+
+      <!-- Scrollable content -->
+      <div class="page-content" style="padding-bottom:80px">
+
+        <!-- Ringkasan Pesanan -->
+        <div class="checkout-section">
+          <div class="checkout-section-title">🛒 Ringkasan Pesanan</div>
+          <!-- 🔧 EDIT: Dirender otomatis dari state.cart oleh renderCheckoutPage() -->
+          <div id="checkout-items">
+            <!-- Dirender otomatis -->
+          </div>
+        </div>
+
+        <!-- Alamat Pengiriman -->
+        <div class="checkout-section">
+          <div class="checkout-section-title">📍 Alamat Pengiriman</div>
+          <div class="address-row">
+            <span class="address-icon">📍</span>
+            <!-- 🔧 EDIT: Ubah alamat default di sini atau buat input field untuk alamat dinamis -->
+            <span class="address-text">Jl. Melati No. 12, Jakarta Selatan</span>
+            <span class="address-change" onclick="showToast('Ubah alamat segera hadir!')">Ubah</span>
+          </div>
+        </div>
+
+        <!-- Metode Pembayaran -->
+        <div class="checkout-section">
+          <div class="checkout-section-title">💳 Metode Pembayaran</div>
+          <!-- 🔧 EDIT: Tambah/hapus opsi pembayaran di sini -->
+          <div class="payment-option selected" data-payment="gopay" onclick="selectPayment('gopay')">
+            <div class="payment-name">💚 GoPay</div>
+            <div class="payment-radio"><div></div></div>
+          </div>
+          <div class="payment-option" data-payment="ovo" onclick="selectPayment('ovo')">
+            <div class="payment-name">💜 OVO</div>
+            <div class="payment-radio"></div>
+          </div>
+          <div class="payment-option" data-payment="dana" onclick="selectPayment('dana')">
+            <div class="payment-name">💙 DANA</div>
+            <div class="payment-radio"></div>
+          </div>
+          <div class="payment-option" data-payment="transfer" onclick="selectPayment('transfer')">
+            <div class="payment-name">🏦 Transfer Bank</div>
+            <div class="payment-radio"></div>
+          </div>
+        </div>
+
+        <!-- Total Nutrisi -->
+        <div class="checkout-section">
+          <div class="checkout-section-title">🥗 Total Nutrisi</div>
+          <div class="nutri-total-card">
+            <!-- 🔧 EDIT: Data nutrisi dari getTotalNutri() secara otomatis -->
+            <div id="checkout-nutri">
+              <!-- Dirender otomatis -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Total & Bayar -->
+        <div style="padding:0 20px 16px">
+          <div class="checkout-total-row">
+            <span class="checkout-total-label">Total Pembayaran</span>
+            <span class="checkout-total-value" id="checkout-total-val">Rp 0</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bayar Sekarang -->
+      <div class="checkout-bottom">
+        <div class="checkout-total-row">
+          <span class="checkout-total-label">Total</span>
+          <span class="checkout-total-value" id="checkout-total-val2">Rp 0</span>
+        </div>
+        <button class="pay-now-btn" onclick="placeOrder()">💳 Bayar Sekarang</button>
+      </div>
+    </div><!-- /page-checkout -->
+
+
+    <!-- ======================================================
+         PAGE 6: PROFIL
+         ====================================================== -->
+    <div class="page" id="page-profile">
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <!-- 🔧 EDIT: Foto profil – klik avatar untuk upload foto baru -->
+        <div class="profile-avatar" id="profile-avatar-main" onclick="triggerPhotoUpload('profile-photo-input')" style="position:relative">
+          <span style="font-size:38px">👤</span>
+          <div class="upload-photo-hint">📷</div>
+        </div>
+        <!-- Input tersembunyi untuk upload foto dari halaman profil -->
+        <input type="file" id="profile-photo-input" accept="image/*" class="photo-upload-input" style="display:none">
+
+        <!-- 🔧 EDIT: Nama & email diisi otomatis dari state.user (setelah login) -->
+        <div class="profile-user-name" id="profile-name">Pengguna</div>
+        <div class="profile-email" id="profile-email">pengguna@nutrigrow.id</div>
+        <div class="profile-category-badge" id="profile-badge">👤</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="profile-stats" style="margin-top:-1px;border-radius:0 0 var(--radius) var(--radius)">
+        <div class="profile-stat">
+          <div class="profile-stat-value blue" id="profile-orders">0</div>
+          <div class="profile-stat-label">Pesanan</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value teal" id="profile-calories">0</div>
+          <div class="profile-stat-label">Total Kalori</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value green">98%</div>
+          <div class="profile-stat-label">Nutrisi Hari</div>
+        </div>
+      </div>
+
+      <!-- Scrollable content -->
+      <div class="page-content" style="padding-top:16px">
+
+        <!-- Profile Menu Items -->
+        <div class="profile-menu-list">
+
+          <!-- 🔧 EDIT: Edit Profil – tambahkan navigasi ke page edit profil jika dibutuhkan -->
+          <div class="profile-menu-item" onclick="showToast('Fitur Edit Profil segera hadir!')">
+            <div class="profile-menu-icon">👤</div>
+            <div class="profile-menu-info">
+              <div class="profile-menu-name">Edit Profil</div>
+              <div class="profile-menu-sub">Ubah nama dan kategori</div>
+            </div>
+            <span class="profile-menu-arrow">›</span>
+          </div>
+
+          <div class="profile-menu-item" onclick="showToast('Riwayat pesanan segera hadir!')">
+            <div class="profile-menu-icon">❤️</div>
+            <div class="profile-menu-info">
+              <div class="profile-menu-name">Riwayat Pesanan</div>
+              <div class="profile-menu-sub">Lihat pesanan sebelumnya</div>
+            </div>
+            <span class="profile-menu-arrow">›</span>
+          </div>
+
+          <div class="profile-menu-item" onclick="showToast('Rekam nutrisi segera hadir!')">
+            <div class="profile-menu-icon">📊</div>
+            <div class="profile-menu-info">
+              <div class="profile-menu-name">Rekam Nutrisi</div>
+              <div class="profile-menu-sub">Pantau asupan gizi harian</div>
+            </div>
+            <span class="profile-menu-arrow">›</span>
+          </div>
+
+          <div class="profile-menu-item" onclick="showToast('Notifikasi segera hadir!')">
+            <div class="profile-menu-icon">🔔</div>
+            <div class="profile-menu-info">
+              <div class="profile-menu-name">Notifikasi</div>
+              <div class="profile-menu-sub">Atur pengingat nutrisi</div>
+            </div>
+            <span class="profile-menu-arrow">›</span>
+          </div>
+
+          <div class="profile-menu-item" onclick="showToast('FAQ dan bantuan segera hadir!')">
+            <div class="profile-menu-icon">❓</div>
+            <div class="profile-menu-info">
+              <div class="profile-menu-name">Bantuan</div>
+              <div class="profile-menu-sub">FAQ dan kontak dukungan</div>
+            </div>
+            <span class="profile-menu-arrow">›</span>
+          </div>
+
+          <!-- Logout -->
+          <div class="profile-menu-item" onclick="navigateTo('login')" style="margin-top:8px">
+            <div class="profile-menu-icon" style="background:#FEE2E2">🚪</div>
+            <div class="profile-menu-info">
+              <div class="profile-menu-name" style="color:var(--danger)">Keluar</div>
+              <div class="profile-menu-sub">Logout dari akun</div>
+            </div>
+            <span class="profile-menu-arrow" style="color:var(--danger)">›</span>
+          </div>
+
+        </div>
+
+        <div style="height:20px"></div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav">
+        <button class="nav-item" data-page="home" onclick="navigateTo('home')">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Beranda</span>
+        </button>
+        <button class="nav-item" data-page="menu" onclick="navigateTo('menu')">
+          <span class="nav-icon">🍽️</span>
+          <span class="nav-label">Menu</span>
+        </button>
+        <button class="nav-item" data-page="rantang" onclick="navigateTo('rantang')">
+          <span class="nav-icon">🍱</span>
+          <span class="nav-label">Rantang</span>
+          <span class="nav-badge" style="display:none">0</span>
+        </button>
+        <button class="nav-item active" data-page="profile" onclick="navigateTo('profile')">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Profil</span>
+        </button>
+      </nav>
+    </div><!-- /page-profile -->
+
+
+    <!-- ======================================================
+         PAGE 7: SUCCESS / ORDER PLACED
+         ====================================================== -->
+    <div class="page" id="page-success">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:40px 24px;text-align:center">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Pesanan Dikonfirmasi!</div>
+        <div class="success-sub">
+          Rantang NutriGrow Anda sedang disiapkan oleh mitra warteg terdekat dengan standar gizi terbaik.
+        </div>
+        <div style="margin:20px 0;background:var(--bg-light);border-radius:var(--radius-sm);padding:16px;width:100%">
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">Total Pembayaran</div>
+          <div style="font-size:22px;font-weight:900;color:var(--primary);font-family:var(--font-display)" id="success-total">Rp 0</div>
+        </div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:24px">
+          🕐 Estimasi pengiriman: 30-45 menit
+        </div>
+        <button class="btn-primary" onclick="navigateTo('home')">🏠 Kembali ke Beranda</button>
+      </div>
+    </div><!-- /page-success -->
+
+  </div><!-- /screen -->
+</div><!-- /phone-frame -->
+
+<!-- Global Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+// ============================================================
+// INLINE SCRIPT: Handle auth tab styling & cart banner init
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Auth tab styling toggle
+  document.querySelectorAll('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.auth-tab').forEach(t => {
+        if(t.dataset.mode === this.dataset.mode) {
+          t.style.background = 'white';
+          t.style.color = 'var(--primary)';
+          t.style.boxShadow = '0 2px 8px rgba(21,101,192,0.15)';
+        } else {
+          t.style.background = 'transparent';
+          t.style.color = 'var(--text-muted)';
+          t.style.boxShadow = 'none';
+        }
+      });
+    });
+  });
+
+  // Cart banner visibility
+  const cartBanner = document.getElementById('cart-banner');
+  if(cartBanner) cartBanner.style.display = 'none';
+});
+</script>
+</body>
+</html>
