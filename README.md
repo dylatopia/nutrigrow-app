@@ -1,4 +1,7 @@
 # NutriGrow — Integrated Nutrition App for Mothers & Children (Prototype)
+> Built with AI-assisted tools and customized by the author.
+> A front-end prototype developed for a university business case project.
+
 
 **Live prototype:** https://app-nutrigrow.netlify.app/
 
